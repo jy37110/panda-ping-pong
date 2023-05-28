@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script
+    src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="./js/game.js"></script>
+    <script src="./js/player.js"></script>
+    <link rel="stylesheet" href="index.css">
+    <title>Panda Ping Pong</title>
+    <script>
+        let game;
+        const startGame = (startFrom) => {
+            game = new Game(startFrom)
+            console.log("game is started")
+        }
+
+        const endGame = () => {
+            delete game;
+        }
+
+        const handleLeftClick = () => {
+            if (game === undefined) {
+                startGame("playerA")
+            } else {
+                game.hitPoint("playerA")
+            }
+            updateUI()
+        }
+
+        const handleRightClick = () => {
+           if (game === undefined) {
+                startGame("playerB")
+            } else {
+                game.hitPoint("playerB")
+            }
+            updateUI()
+        }
+
+        const updateUI = () => {
+            console.log(game)
+            if(game) {
+                $("#playerA-match").html(game.playerA.match);
+                $("#playerB-match").html(game.playerB.match);
+                $("#playerA-scroe").html(game.playerA.scroe);
+                $("#playerB-scroe").html(game.playerB.scroe);
+                $(".balls").html("");
+                for(let i = game.playerA.service; i > 0; i--) {
+                    $("#playerA-balls").append('<div class="ball"></div>');
+                }
+                for(let i = game.playerB.service; i > 0; i--) {
+                    $("#playerB-balls").append('<div class="ball"></div>');
+                }
+                if(game.positionIsSwitched === true) {
+                    $(".left").addClass("left-to-right")
+                    $(".right").addClass("right-to-left")
+                    $("#playerA-match").addClass("pull-left")
+                    $("#playerB-match").addClass("pull-right")
+                } else if(game.positionIsSwitched === false) {
+                    $(".left").removeClass("left-to-right")
+                    $(".right").removeClass("right-to-left")
+                    $("#playerA-match").removeClass("pull-left")
+                    $("#playerB-match").removeClass("pull-right")
+                }
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="top-bar">
+            <div class="stop">Stop</div>
+            <div class="reverse">Reverse</div>
+        </div>
+        <div class="left" onclick="handleLeftClick()">
+            <div class="scroe">
+                <h1 id="playerA-scroe">0</h1>
+                <div id="playerA-balls" class="balls"></div>
+            </div>
+            <div id="playerA-match">0</div>
+        </div>
+        <div class="right" onclick="handleRightClick()">
+            <div class="scroe">
+                <h1 id="playerB-scroe">0</h1>
+                <div id="playerB-balls" class="balls"></div>
+            </div>
+            <div id="playerB-match">0</div>
+        </div>
+    </div>
+</body>
+
+
+</html>
