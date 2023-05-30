@@ -9,10 +9,9 @@ html {
   overscroll-behavior: none;
 }
 
-
 .container {
     width: 100vw;
-    height: 100vh;
+    height: 100svh;
     display: flex;
     color: white;
     position: relative;
@@ -145,7 +144,7 @@ h1 {
     position: relative;
     bottom: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100svh;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -164,5 +163,5 @@ h1 {
 }
 
 .game-board-slide-in {
-    transform: translateY(-100vh);
+    transform: translateY(-100svh);
 }
