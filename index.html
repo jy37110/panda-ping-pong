@@ -17,7 +17,6 @@
         let game;
         const startGame = (startFrom) => {
             game = new Game(startFrom)
-            console.log("game is started")
         }
 
         const endGame = () => {
@@ -58,7 +57,6 @@
         }
 
         const updateUI = () => {
-            console.log(game)
             if(game) {
                 $("#playerA-match").html(game.playerA.match);
                 $("#playerB-match").html(game.playerB.match);
