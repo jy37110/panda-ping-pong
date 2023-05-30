@@ -42,12 +42,12 @@
             updateUI()
         }
 
-        const boardSlideIn = () => {
-            $(".game-record-mask").addClass("game-board-slide-in")
+        const boardFadeIn = () => {
+            $(".game-record-mask").addClass("game-board-fade-in")
         }
 
-        const boardSlideOut = () => {
-            $(".game-record-mask").removeClass("game-board-slide-in")
+        const boardFadeOut = () => {
+            $(".game-record-mask").removeClass("game-board-fade-in")
         }
 
         const reverse = () => {
@@ -85,7 +85,7 @@
                 $("#game-status").html(game.reversible.gameStatus);
 
                 if(game.reversible.gameStatus === "Game Over!") {
-                    boardSlideIn()
+                    boardFadeIn()
                 }
             }
         }
@@ -96,7 +96,7 @@
         <div class="top-bar">
             <div class="stop" onclick="endGame()"><i class="fa-sharp fa-regular fa-circle-stop" style="color: #ffffff;"></i></div>
             <div class="reverse" onclick="reverse()"><i class="fa-solid fa-rotate-left" style="color: #ffffff;"></i></div>
-            <div class="board" onclick="boardSlideIn()"><i class="fa-solid fa-pause" style="color: #ffffff;"></i></div>
+            <div class="board" onclick="boardFadeIn()"><i class="fa-solid fa-pause" style="color: #ffffff;"></i></div>
         </div>
         <div class="left" onclick="handleLeftClick()">
             <div class="score">
@@ -112,18 +112,11 @@
             </div>
             <div id="playerB-match" class="prevent-select">0</div>
         </div>
+        <div class="game-record-mask" onclick="boardFadeOut()">
+            <h1 id="game-status">No Game</h1>
+        </div>
+    </div>
 
-    </div>
-    <div class="game-record-mask" onclick="boardSlideOut()">
-        <h1 id="game-status">No Game</h1>
-    </div>
 </body>
-<script>
-    $(document).on('touchmove', function(e) {
-        e.preventDefault();
-    });
-    $(document).on('touchstart', function(e) {
-        e.preventDefault();
-    });
-</script>
+
 </html>
