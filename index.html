@@ -119,7 +119,11 @@
     </div>
 </body>
 <script>
-    document.body.addEventListener('touchmove', function(e){ e.preventDefault(); });
-
+    $(document).on('touchmove', function(e) {
+        e.preventDefault();
+    });
+    $(document).on('touchstart', function(e) {
+        e.preventDefault();
+    });
 </script>
 </html>
