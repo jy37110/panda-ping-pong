@@ -19,7 +19,7 @@ class Game {
       initialService: serviceSide,
       isDeuceTrigered: false,
       finalRoundSwitched: false,
-      gameStatus: 'On going game',
+      gameStatus: 'Pause',
     };
     this.history = [
       {
