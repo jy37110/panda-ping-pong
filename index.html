@@ -20,7 +20,7 @@
         }
 
         const endGame = () => {
-            delete game;
+            window.location.reload();
         }
 
         const handleLeftClick = () => {
@@ -94,7 +94,7 @@
 <body>
     <div class="container">
         <div class="top-bar">
-            <div class="stop"><i class="fa-sharp fa-regular fa-circle-stop" style="color: #ffffff;"></i></div>
+            <div class="stop" onclick="endGame()"><i class="fa-sharp fa-regular fa-circle-stop" style="color: #ffffff;"></i></div>
             <div class="reverse" onclick="reverse()"><i class="fa-solid fa-rotate-left" style="color: #ffffff;"></i></div>
             <div class="board" onclick="boardSlideIn()"><i class="fa-solid fa-table-tennis-paddle-ball"></i></div>
         </div>
