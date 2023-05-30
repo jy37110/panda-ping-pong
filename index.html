@@ -14,8 +14,6 @@
     <link rel="stylesheet" href="index.css">
     <title>Panda Ping Pong</title>
     <script>
-        document.body.addEventListener('touchmove', function(e){ e.preventDefault(); });
-
         let game;
         const startGame = (startFrom) => {
             game = new Game(startFrom)
@@ -119,6 +117,8 @@
         <h1 id="game-status">No Game</h1>
     </div>
 </body>
+<script>
+    document.body.addEventListener('touchmove', function(e){ e.preventDefault(); });
 
-
+</script>
 </html>
