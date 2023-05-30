@@ -22,7 +22,7 @@
         }
 
         const handleLeftClick = () => {
-            if (game === undefined) {
+            if (game === undefined || game.reversible.gameStatus === "Game Over!") {
                 startGame("playerA")
             } else {
                 game.hitPoint("playerA")
@@ -31,12 +31,27 @@
         }
 
         const handleRightClick = () => {
-           if (game === undefined) {
+            if (game === undefined || game.reversible.gameStatus === "Game Over!") {
                 startGame("playerB")
             } else {
                 game.hitPoint("playerB")
             }
             updateUI()
+        }
+
+        const boardSlideIn = () => {
+            $(".game-record-mask").addClass("game-board-slide-in")
+        }
+
+        const boardSlideOut = () => {
+            $(".game-record-mask").removeClass("game-board-slide-in")
+        }
+
+        const reverse = () => {
+            if (game) {
+                game.reverse();
+                updateUI();
+            }
         }
 
         const updateUI = () => {
@@ -64,31 +79,41 @@
                     $("#playerA-match").removeClass("pull-left")
                     $("#playerB-match").removeClass("pull-right")
                 }
+
+                $("#game-status").html(game.reversible.gameStatus);
+
+                if(game.reversible.gameStatus === "Game Over!") {
+                    boardSlideIn()
+                }
             }
         }
-
     </script>
 </head>
 <body>
     <div class="container">
         <div class="top-bar">
             <div class="stop">Stop</div>
-            <div class="reverse">Reverse</div>
+            <div class="reverse" onclick="reverse()">Reverse</div>
+            <div class="board" onclick="boardSlideIn()">Board</div>
         </div>
         <div class="left" onclick="handleLeftClick()">
             <div class="scroe">
-                <h1 id="playerA-scroe">0</h1>
+                <h1 id="playerA-scroe" class="prevent-select">0</h1>
                 <div id="playerA-balls" class="balls"></div>
             </div>
-            <div id="playerA-match">0</div>
+            <div id="playerA-match" class="prevent-select">0</div>
         </div>
         <div class="right" onclick="handleRightClick()">
             <div class="scroe">
-                <h1 id="playerB-scroe">0</h1>
+                <h1 id="playerB-scroe" class="prevent-select">0</h1>
                 <div id="playerB-balls" class="balls"></div>
             </div>
-            <div id="playerB-match">0</div>
+            <div id="playerB-match" class="prevent-select">0</div>
         </div>
+
+    </div>
+    <div class="game-record-mask" onclick="boardSlideOut()">
+        <h1 id="game-status">No Game</h1>
     </div>
 </body>
 

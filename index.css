@@ -2,6 +2,10 @@
     padding: 0;
     margin: 0;
 }
+body {
+    overflow: hidden;
+}
+
 .container {
     width: 100vw;
     height: 100vh;
@@ -14,10 +18,26 @@
     position: absolute;
     top: 0;
     left: 0;
-    display: flex;
-    justify-content: space-between;
     width: 100%;
     z-index: 10;
+}
+
+.top-bar div {
+    padding: 6px 12px;
+    font-size: 24px;
+    line-height: 100%;
+}
+
+.stop {
+    float: left;
+}
+
+.board {
+    float: right;
+}
+
+.reverse {
+    float: right;
 }
 
 .left {
@@ -31,6 +51,7 @@
     position: relative;
     left: 0;
     transition: all .5s linear;
+    cursor: pointer;
 }
 
 .right {
@@ -44,6 +65,7 @@
     position: relative;
     right: 0;
     transition: all .5s linear;
+    cursor: pointer;
 }
 
 #playerA-match {
@@ -73,12 +95,13 @@ h1 {
 
 .balls {
     position: absolute;
-    bottom: 32;
+    bottom: -32px;
     right: 0;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     column-gap: 24px;
+    overflow: auto;
 }
 
 .ball {
@@ -104,4 +127,36 @@ h1 {
 
 .right-to-left {
     right: 50vw;
+}
+
+.prevent-select {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.game-record-mask {
+    position: relative;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 20;
+    transition: transform .5s linear;
+    background-color: black;
+    cursor: pointer;
+}
+
+#game-status {
+    color: green;
+    font-size: 36px;
+    line-height: 100%;
+    text-align: center;
+}
+
+.game-board-slide-in {
+    transform: translateY(-100vh);
 }

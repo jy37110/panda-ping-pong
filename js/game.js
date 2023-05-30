@@ -5,24 +5,33 @@ const SWITCH_POINT_FOR_FINAL = 5;
 
 class Game {
   constructor(serviceSide) {
-    this.playerA = new Player(
-      serviceSide === 'playerA' ? SERVICE_TIMES : 0,
-      SERVICE_TIMES
-    );
-    this.playerB = new Player(
-      serviceSide === 'playerB' ? SERVICE_TIMES : 0,
-      SERVICE_TIMES
-    );
-    this.currentRound = 1;
-    this.history = [];
-    this.initialService = serviceSide;
-    this.isDeuceTrigered = false;
+    this.playerA = new Player({
+      service: serviceSide === 'playerA' ? SERVICE_TIMES : 0,
+      serviceTimes: SERVICE_TIMES,
+    });
+    this.playerB = new Player({
+      service: serviceSide === 'playerB' ? SERVICE_TIMES : 0,
+      serviceTimes: SERVICE_TIMES,
+    });
     this.positionIsSwitched = undefined;
-    this.finalRoundSwitched = false;
+    this.reversible = {
+      currentRound: 1,
+      initialService: serviceSide,
+      isDeuceTrigered: false,
+      finalRoundSwitched: false,
+      gameStatus: 'On going game',
+    };
+    this.history = [
+      {
+        a: Object.assign({}, this.playerA),
+        b: Object.assign({}, this.playerB),
+        reversible: Object.assign({}, this.reversible),
+        switched: false,
+      },
+    ];
   }
 
   hitPoint(player) {
-    this.history.push(player);
     if (player === 'playerA') {
       this.playerA.hitPoint();
     } else if (player === 'playerB') {
@@ -31,7 +40,26 @@ class Game {
       throw new Error(`Unknown player of ${player}`);
     }
     this.updateService();
-    return this.checkMatch();
+    const positionJustSwitched = this.checkMatch();
+    this.history.push({
+      a: Object.assign({}, this.playerA),
+      b: Object.assign({}, this.playerB),
+      reversible: Object.assign({}, this.reversible),
+      switched: positionJustSwitched,
+    });
+  }
+
+  reverse() {
+    if (this.history.length > 1) {
+      const currentState = this.history.pop();
+      const previousState = this.history[this.history.length - 1];
+      this.playerA = new Player(previousState.a);
+      this.playerB = new Player(previousState.b);
+      this.reversible = Object.assign({}, previousState.reversible);
+      if (currentState.switched) {
+        this.switchPosition();
+      }
+    }
   }
 
   checkMatch() {
@@ -40,41 +68,50 @@ class Game {
       playerA.scroe === MATCH_POINT - 1 &&
       playerB.scroe === MATCH_POINT - 1
     ) {
-      this.isDeuceTrigered = true;
+      this.reversible.isDeuceTrigered = true;
     }
-    if (playerA.scroe >= MATCH_POINT && !this.isDeuceTrigered) {
-      this.matchDone(playerA, playerB);
-      return true;
+    if (playerA.scroe >= MATCH_POINT && !this.reversible.isDeuceTrigered) {
+      return this.matchDone(playerA, playerB);
     }
-    if (playerB.scroe >= MATCH_POINT && !this.isDeuceTrigered) {
-      this.matchDone(playerB, playerA);
-      return true;
+    if (playerB.scroe >= MATCH_POINT && !this.reversible.isDeuceTrigered) {
+      return this.matchDone(playerB, playerA);
     }
-    if (this.isDeuceTrigered && playerA.scroe - playerB.scroe >= 2) {
-      this.matchDone(playerA, playerB);
-      return true;
+    if (this.reversible.isDeuceTrigered && playerA.scroe - playerB.scroe >= 2) {
+      return this.matchDone(playerA, playerB);
     }
     if (this.isDeuceTrigered && playerB.scroe - playerA.scroe >= 2) {
-      this.matchDone(playerB, playerA);
-      return true;
+      return this.matchDone(playerB, playerA);
     }
     if (
-      this.currentRound === TOTAL_MATCH &&
-      !this.finalRoundSwitched &&
+      this.reversible.currentRound === TOTAL_MATCH &&
+      !this.reversible.finalRoundSwitched &&
       (playerA.scroe === SWITCH_POINT_FOR_FINAL ||
         playerB.scroe === SWITCH_POINT_FOR_FINAL)
     ) {
       this.switchPosition();
-      this.finalRoundSwitched = true;
+      this.reversible.finalRoundSwitched = true;
+      return true;
     }
     return false;
   }
 
   matchDone(winner, losser) {
-    this.currentRound = this.currentRound + 1;
-    winner.winMatch(this.currentRound);
-    losser.lossMatch(this.currentRound);
+    this.reversible.currentRound = this.reversible.currentRound + 1;
+    winner.winMatch(this.reversible.currentRound);
+    losser.lossMatch(this.reversible.currentRound);
+    if (this.gameIsOver()) {
+      this.reversible.gameStatus = 'Game Over!';
+      return false;
+    }
     this.switchPosition();
+    return true;
+  }
+
+  gameIsOver() {
+    return (
+      this.playerA.match >= TOTAL_MATCH / 2 ||
+      this.playerB.match >= TOTAL_MATCH / 2
+    );
   }
 
   updateService() {
@@ -89,7 +126,9 @@ class Game {
       serviceRemain = this.playerB.consumeService();
     }
     if (serviceRemain === 0) {
-      this[nextService].serviceChange(this.isDeuceTrigered ? 1 : SERVICE_TIMES);
+      this[nextService].serviceChange(
+        this.reversible.isDeuceTrigered ? 1 : SERVICE_TIMES
+      );
     }
   }
 

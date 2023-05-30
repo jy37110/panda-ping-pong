@@ -1,10 +1,10 @@
 class Player {
-  constructor(service, serviceTimes) {
-    this.scroe = 0;
-    this.match = 0;
-    this.service = service;
-    this.initalService = service !== 0;
-    this.serviceTimes = serviceTimes;
+  constructor(option) {
+    this.scroe = option.scroe ?? 0;
+    this.match = option.match ?? 0;
+    this.service = option.service;
+    this.initalService = option.service !== 0;
+    this.serviceTimes = option.serviceTimes;
   }
 
   hitPoint() {
@@ -35,7 +35,6 @@ class Player {
     if (this.initalService) {
       this.service = round % 2 === 0 ? 0 : this.serviceTimes;
     } else {
-      console.log(round, this.serviceTimes);
       this.service = round % 2 === 0 ? this.serviceTimes : 0;
     }
   }
