@@ -8,6 +8,8 @@
     src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="./js/game.js"></script>
     <script src="./js/player.js"></script>
+    <script src="https://kit.fontawesome.com/2271599a7b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Chakra Petch">
     <link rel="stylesheet" href="index.css">
     <title>Panda Ping Pong</title>
     <script>
@@ -59,8 +61,8 @@
             if(game) {
                 $("#playerA-match").html(game.playerA.match);
                 $("#playerB-match").html(game.playerB.match);
-                $("#playerA-scroe").html(game.playerA.scroe);
-                $("#playerB-scroe").html(game.playerB.scroe);
+                $("#playerA-score").html(game.playerA.score);
+                $("#playerB-score").html(game.playerB.score);
                 $(".balls").html("");
                 for(let i = game.playerA.service; i > 0; i--) {
                     $("#playerA-balls").append('<div class="ball"></div>');
@@ -92,20 +94,20 @@
 <body>
     <div class="container">
         <div class="top-bar">
-            <div class="stop">Stop</div>
-            <div class="reverse" onclick="reverse()">Reverse</div>
-            <div class="board" onclick="boardSlideIn()">Board</div>
+            <div class="stop"><i class="fa-sharp fa-regular fa-circle-stop" style="color: #ffffff;"></i></div>
+            <div class="reverse" onclick="reverse()"><i class="fa-solid fa-rotate-left" style="color: #ffffff;"></i></div>
+            <div class="board" onclick="boardSlideIn()"><i class="fa-solid fa-table-tennis-paddle-ball"></i></div>
         </div>
         <div class="left" onclick="handleLeftClick()">
-            <div class="scroe">
-                <h1 id="playerA-scroe" class="prevent-select">0</h1>
+            <div class="score">
+                <h1 id="playerA-score" class="prevent-select">0</h1>
                 <div id="playerA-balls" class="balls"></div>
             </div>
             <div id="playerA-match" class="prevent-select">0</div>
         </div>
         <div class="right" onclick="handleRightClick()">
-            <div class="scroe">
-                <h1 id="playerB-scroe" class="prevent-select">0</h1>
+            <div class="score">
+                <h1 id="playerB-score" class="prevent-select">0</h1>
                 <div id="playerB-balls" class="balls"></div>
             </div>
             <div id="playerB-match" class="prevent-select">0</div>

@@ -1,6 +1,6 @@
 class Player {
   constructor(option) {
-    this.scroe = option.scroe ?? 0;
+    this.score = option.score ?? 0;
     this.match = option.match ?? 0;
     this.service = option.service;
     this.initalService = option.service !== 0;
@@ -8,7 +8,7 @@ class Player {
   }
 
   hitPoint() {
-    this.scroe++;
+    this.score++;
   }
 
   consumeService() {
@@ -21,13 +21,13 @@ class Player {
   }
 
   winMatch(nextRound) {
-    this.scroe = 0;
+    this.score = 0;
     this.match++;
     this.setServiceForNextRound(nextRound);
   }
 
   lossMatch(nextRound) {
-    this.scroe = 0;
+    this.score = 0;
     this.setServiceForNextRound(nextRound);
   }
 

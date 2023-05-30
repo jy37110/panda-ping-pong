@@ -65,28 +65,28 @@ class Game {
   checkMatch() {
     const { playerA, playerB } = this;
     if (
-      playerA.scroe === MATCH_POINT - 1 &&
-      playerB.scroe === MATCH_POINT - 1
+      playerA.score === MATCH_POINT - 1 &&
+      playerB.score === MATCH_POINT - 1
     ) {
       this.reversible.isDeuceTrigered = true;
     }
-    if (playerA.scroe >= MATCH_POINT && !this.reversible.isDeuceTrigered) {
+    if (playerA.score >= MATCH_POINT && !this.reversible.isDeuceTrigered) {
       return this.matchDone(playerA, playerB);
     }
-    if (playerB.scroe >= MATCH_POINT && !this.reversible.isDeuceTrigered) {
+    if (playerB.score >= MATCH_POINT && !this.reversible.isDeuceTrigered) {
       return this.matchDone(playerB, playerA);
     }
-    if (this.reversible.isDeuceTrigered && playerA.scroe - playerB.scroe >= 2) {
+    if (this.reversible.isDeuceTrigered && playerA.score - playerB.score >= 2) {
       return this.matchDone(playerA, playerB);
     }
-    if (this.isDeuceTrigered && playerB.scroe - playerA.scroe >= 2) {
+    if (this.isDeuceTrigered && playerB.score - playerA.score >= 2) {
       return this.matchDone(playerB, playerA);
     }
     if (
       this.reversible.currentRound === TOTAL_MATCH &&
       !this.reversible.finalRoundSwitched &&
-      (playerA.scroe === SWITCH_POINT_FOR_FINAL ||
-        playerB.scroe === SWITCH_POINT_FOR_FINAL)
+      (playerA.score === SWITCH_POINT_FOR_FINAL ||
+        playerB.score === SWITCH_POINT_FOR_FINAL)
     ) {
       this.switchPosition();
       this.reversible.finalRoundSwitched = true;

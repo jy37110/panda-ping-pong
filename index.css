@@ -2,6 +2,11 @@
     padding: 0;
     margin: 0;
 }
+
+html {
+  font-family: "Chakra Petch";
+}
+
 body {
     overflow: hidden;
 }
@@ -23,13 +28,14 @@ body {
 }
 
 .top-bar div {
-    padding: 6px 12px;
+    padding: 12px 12px;
     font-size: 24px;
     line-height: 100%;
 }
 
 .stop {
     float: left;
+    margin-left: 12px;
 }
 
 .board {
@@ -38,6 +44,7 @@ body {
 
 .reverse {
     float: right;
+    margin-right: 12px;
 }
 
 .left {
@@ -84,7 +91,7 @@ body {
     padding: 0 24px;
 }
 
-.scroe {
+.score {
     position: relative;
 }
 
