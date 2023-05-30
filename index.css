@@ -5,11 +5,10 @@
 
 html {
   font-family: "Chakra Petch";
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
-body {
-    overflow: hidden;
-}
 
 .container {
     width: 100vw;
