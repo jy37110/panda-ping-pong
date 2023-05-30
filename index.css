@@ -92,22 +92,26 @@ html {
 
 .score {
     position: relative;
+    width: 100%;
 }
 
 h1 {
     font-size: 200px;
     line-height: 90%;
+    text-align: center;
 }
 
 .balls {
     position: absolute;
     bottom: -32px;
     right: 0;
+    padding-right: 32px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     column-gap: 24px;
     overflow: auto;
+    width: 100%;
 }
 
 .ball {
@@ -115,6 +119,13 @@ h1 {
     height: 32px;
     border-radius: 16px;
     background-color: yellowgreen;
+    animation: move-in .5s linear;
+}
+
+@keyframes move-in {
+    0% {transform: translateX(-40vw);}
+    75% {transform: translateX(16px);}
+    100% {transform: translateX(0px);}
 }
 
 .pull-left {
