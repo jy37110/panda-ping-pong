@@ -1,7 +1,7 @@
-const SERVICE_TIMES = 2;
-const MATCH_POINT = 11;
-const TOTAL_MATCH = 5;
-const SWITCH_POINT_FOR_FINAL = 5;
+const SERVICE_TIMES = 2; //How many services to switch
+const MATCH_POINT = 11; //How many points to win a round
+const TOTAL_MATCH = 5; //How many round in total to play
+const SWITCH_POINT_FOR_FINAL = 5; //-1 means never sitch position on last match
 
 class Game {
   constructor(serviceSide) {
