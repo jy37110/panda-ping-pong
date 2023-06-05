@@ -20,9 +20,14 @@ html {
         font-size: 14px;
     }
 }
+@media only screen and (min-width: 520px) {
+    html {
+        font-size: 16px;
+    }
+}
 @media only screen and (min-width: 768px) {
     html {
-        font-size: 24px;
+        font-size: 18px;
     }
 }
 
@@ -97,7 +102,7 @@ html {
     top: 0;
     right: 0;
     font-size: 3rem;
-    padding: 0 24px;
+    padding: 0 1.5rem;
 }
 
 #playerB-match {
@@ -105,7 +110,7 @@ html {
     top: 0;
     left: 0;
     font-size: 3rem;
-    padding: 0 24px;
+    padding: 0 1.5rem;
 }
 
 .score {
@@ -123,26 +128,26 @@ h1 {
     position: absolute;
     bottom: -32px;
     right: 0;
-    padding-right: 32px;
+    padding-right: 2rem;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    column-gap: 24px;
+    column-gap: 1.5rem;
     overflow: auto;
     width: 100%;
 }
 
 .ball {
-    width: 32px;
-    height: 32px;
-    border-radius: 16px;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 1rem;
     background-color: yellowgreen;
     animation: move-in .5s linear;
 }
 
 @keyframes move-in {
     0% {transform: translateX(-40vw);}
-    75% {transform: translateX(16px);}
+    75% {transform: translateX(1rem);}
     100% {transform: translateX(0px);}
 }
 
