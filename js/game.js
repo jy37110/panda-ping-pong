@@ -79,7 +79,7 @@ class Game {
     if (this.reversible.isDeuceTrigered && playerA.score - playerB.score >= 2) {
       return this.matchDone(playerA, playerB);
     }
-    if (this.isDeuceTrigered && playerB.score - playerA.score >= 2) {
+    if (this.reversible.isDeuceTrigered && playerB.score - playerA.score >= 2) {
       return this.matchDone(playerB, playerA);
     }
     if (
@@ -97,6 +97,7 @@ class Game {
 
   matchDone(winner, losser) {
     this.reversible.currentRound = this.reversible.currentRound + 1;
+    this.reversible.isDeuceTrigered = false;
     winner.winMatch(this.reversible.currentRound);
     losser.lossMatch(this.reversible.currentRound);
     if (this.gameIsOver()) {
