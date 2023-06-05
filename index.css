@@ -7,6 +7,23 @@ html {
   font-family: "Chakra Petch";
   overflow: hidden;
   overscroll-behavior: none;
+  font-size: 16px;
+}
+
+@media only screen and (max-width: 420px) {
+    html {
+        font-size: 10px;
+    }
+}
+@media only screen and (min-width: 420px) {
+    html {
+        font-size: 16px;
+    }
+}
+@media only screen and (min-width: 768px) {
+    html {
+        font-size: 24px;
+    }
 }
 
 .container {
@@ -28,13 +45,14 @@ html {
 
 .top-bar div {
     padding: 12px 12px;
-    font-size: 24px;
+    font-size: 1.5rem;
     line-height: 100%;
+    margin-top: 0.5rem;
 }
 
 .stop {
     float: left;
-    margin-left: 12px;
+    margin-left: 1.5rem;
 }
 
 .board {
@@ -43,7 +61,7 @@ html {
 
 .reverse {
     float: right;
-    margin-right: 12px;
+    margin-right: 1.5rem;
 }
 
 .left {
@@ -78,7 +96,7 @@ html {
     position: absolute;
     top: 0;
     right: 0;
-    font-size: 48px;
+    font-size: 3rem;
     padding: 0 24px;
 }
 
@@ -86,7 +104,7 @@ html {
     position: absolute;
     top: 0;
     left: 0;
-    font-size: 48px;
+    font-size: 3rem;
     padding: 0 24px;
 }
 
@@ -96,7 +114,7 @@ html {
 }
 
 h1 {
-    font-size: 200px;
+    font-size: 12.5rem;
     line-height: 90%;
     text-align: center;
 }
@@ -171,7 +189,7 @@ h1 {
 
 #game-status {
     color: green;
-    font-size: 36px;
+    font-size: 2rem;
     line-height: 100%;
     text-align: center;
 }
