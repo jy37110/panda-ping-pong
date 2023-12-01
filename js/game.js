@@ -39,6 +39,7 @@ class Game {
     } else {
       throw new Error(`Unknown player of ${player}`);
     }
+    this.handleDeuce();
     this.updateService();
     const positionJustSwitched = this.checkMatch();
     this.history.push({
@@ -56,13 +57,15 @@ class Game {
       this.playerA = new Player(previousState.a);
       this.playerB = new Player(previousState.b);
       this.reversible = Object.assign({}, previousState.reversible);
+      this.playerA.setShouldAnimateBall(false);
+      this.playerB.setShouldAnimateBall(false);
       if (currentState.switched) {
         this.switchPosition();
       }
     }
   }
 
-  checkMatch() {
+  handleDeuce() {
     const { playerA, playerB } = this;
     if (
       playerA.score === MATCH_POINT - 1 &&
@@ -70,6 +73,10 @@ class Game {
     ) {
       this.reversible.isDeuceTrigered = true;
     }
+  }
+
+  checkMatch() {
+    const { playerA, playerB } = this;
     if (playerA.score >= MATCH_POINT && !this.reversible.isDeuceTrigered) {
       return this.matchDone(playerA, playerB);
     }
