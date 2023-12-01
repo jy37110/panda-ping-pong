@@ -5,18 +5,25 @@ class Player {
     this.service = option.service;
     this.initalService = option.service !== 0;
     this.serviceTimes = option.serviceTimes;
+    this.shouldAnimateBall = true;
   }
 
   hitPoint() {
     this.score++;
   }
 
+  setShouldAnimateBall(shouldAnimateBall) {
+    this.shouldAnimateBall = shouldAnimateBall;
+  }
+
   consumeService() {
     this.service = this.service - 1 > 0 ? this.service - 1 : 0;
+    this.shouldAnimateBall = false;
     return this.service;
   }
 
   serviceChange(times) {
+    this.shouldAnimateBall = true;
     this.service = times;
   }
 
@@ -37,5 +44,6 @@ class Player {
     } else {
       this.service = round % 2 === 0 ? this.serviceTimes : 0;
     }
+    this.shouldAnimateBall = true;
   }
 }

@@ -141,6 +141,9 @@ h1 {
     height: 2rem;
     border-radius: 1rem;
     background-color: yellowgreen;
+}
+
+.animate-ball {
     animation: move-in .5s linear;
 }
 

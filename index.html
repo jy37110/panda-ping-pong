@@ -59,16 +59,18 @@
 
         const updateUI = () => {
             if(game) {
+                const ballNode = '<div class="ball"></div>';
+                const animateBallNode = '<div class="ball animate-ball"></div>'
                 $("#playerA-match").html(game.playerA.match);
                 $("#playerB-match").html(game.playerB.match);
                 $("#playerA-score").html(game.playerA.score);
                 $("#playerB-score").html(game.playerB.score);
                 $(".balls").html("");
                 for(let i = game.playerA.service; i > 0; i--) {
-                    $("#playerA-balls").append('<div class="ball"></div>');
+                    $("#playerA-balls").append(game.playerA.shouldAnimateBall ? animateBallNode : ballNode);
                 }
                 for(let i = game.playerB.service; i > 0; i--) {
-                    $("#playerB-balls").append('<div class="ball"></div>');
+                    $("#playerB-balls").append(game.playerB.shouldAnimateBall ? animateBallNode : ballNode);
                 }
                 if(game.positionIsSwitched === true) {
                     $(".left").addClass("left-to-right")
