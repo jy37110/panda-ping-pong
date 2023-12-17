@@ -186,13 +186,14 @@ h1 {
     height: 100svh;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     z-index: -10;
     transition: opacity .5s linear;
     background-color: black;
     cursor: pointer;
     opacity: 0;
+    gap: 1.5rem;
 }
 
 #game-status {
@@ -200,6 +201,13 @@ h1 {
     font-size: 2rem;
     line-height: 100%;
     text-align: center;
+}
+
+#status-info {
+    font-size: 1.8rem;
+    line-height: 100%;
+    text-align: center;
+    letter-spacing: 0.5rem;
 }
 
 .game-board-fade-in {

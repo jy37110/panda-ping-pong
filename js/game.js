@@ -19,7 +19,9 @@ class Game {
       initialService: serviceSide,
       isDeuceTrigered: false,
       finalRoundSwitched: false,
-      gameStatus: 'Pause',
+      gameStatus: 'Started',
+      statusInfo: '0:0',
+      shouldDeliverStatusBoard: false,
     };
     this.history = [
       {
@@ -29,6 +31,25 @@ class Game {
         switched: false,
       },
     ];
+  }
+
+  setShouldDeliverStatusBoard(shouldDeliverStatusBoard) {
+    this.reversible.shouldDeliverStatusBoard = shouldDeliverStatusBoard;
+  }
+
+  setGameStatus(status) {
+    this.reversible.gameStatus = status;
+    this.setShouldDeliverStatusBoard(true);
+  }
+
+  updateGameStatus() {
+    if (this.reversible.gameStatus === 'Pause') {
+      this.reversible.gameStatus = 'Started';
+    } else if (this.reversible.gameStatus === 'Game') {
+      this.checkMatch(true);
+    } else if (this.reversible.gameStatus === 'Game Over!') {
+      delete this;
+    }
   }
 
   hitPoint(player) {
@@ -42,6 +63,9 @@ class Game {
     this.handleDeuce();
     this.updateService();
     const positionJustSwitched = this.checkMatch();
+    this.reversible.statusInfo = this.positionIsSwitched
+      ? `${this.playerB.score} : ${this.playerA.score}`
+      : `${this.playerA.score} : ${this.playerB.score}`;
     this.history.push({
       a: Object.assign({}, this.playerA),
       b: Object.assign({}, this.playerB),
@@ -75,19 +99,19 @@ class Game {
     }
   }
 
-  checkMatch() {
+  checkMatch(startNext) {
     const { playerA, playerB } = this;
     if (playerA.score >= MATCH_POINT && !this.reversible.isDeuceTrigered) {
-      return this.matchDone(playerA, playerB);
+      return this.matchDone(playerA, playerB, startNext);
     }
     if (playerB.score >= MATCH_POINT && !this.reversible.isDeuceTrigered) {
-      return this.matchDone(playerB, playerA);
+      return this.matchDone(playerB, playerA, startNext);
     }
     if (this.reversible.isDeuceTrigered && playerA.score - playerB.score >= 2) {
-      return this.matchDone(playerA, playerB);
+      return this.matchDone(playerA, playerB, startNext);
     }
     if (this.reversible.isDeuceTrigered && playerB.score - playerA.score >= 2) {
-      return this.matchDone(playerB, playerA);
+      return this.matchDone(playerB, playerA, startNext);
     }
     if (
       this.reversible.currentRound === TOTAL_MATCH &&
@@ -102,17 +126,31 @@ class Game {
     return false;
   }
 
-  matchDone(winner, losser) {
+  matchDone(winner, losser, startNext) {
+    if (startNext) {
+      this.startNextRound(winner, losser);
+      return true;
+    }
+    this.reversible.gameStatus = 'Game';
+    this.reversible.shouldDeliverStatusBoard = true;
+    return true;
+  }
+
+  startNextRound(winner, losser) {
+    this.reversible.gameStatus = 'Started';
+    this.reversible.shouldDeliverStatusBoard = false;
     this.reversible.currentRound = this.reversible.currentRound + 1;
     this.reversible.isDeuceTrigered = false;
     winner.winMatch(this.reversible.currentRound);
     losser.lossMatch(this.reversible.currentRound);
     if (this.gameIsOver()) {
-      this.reversible.gameStatus = 'Game Over!';
+      this.setGameStatus('Game Over!');
+      this.reversible.statusInfo = this.positionIsSwitched
+        ? `${this.playerB.match} : ${this.playerA.match}`
+        : `${this.playerA.match} : ${this.playerB.match}`;
       return false;
     }
     this.switchPosition();
-    return true;
   }
 
   gameIsOver() {

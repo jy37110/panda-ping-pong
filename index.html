@@ -50,6 +50,26 @@
             $(".game-record-mask").removeClass("game-board-fade-in")
         }
 
+        const handlePauseClick = () => {
+            if(game) {
+                game.setGameStatus("Pause")
+                updateUI();
+            }
+        }
+
+        const hanldeStatusBoardClick = () => {
+            if(game) {
+                if(game.reversible.gameStatus === "Game Over!") {
+                    endGame();
+                }
+                game.setShouldDeliverStatusBoard(false);
+                game.updateGameStatus();
+                updateUI();
+            } else {
+                boardFadeOut()
+            }
+        }
+
         const reverse = () => {
             if (game) {
                 game.reverse();
@@ -59,6 +79,10 @@
 
         const updateUI = () => {
             if(game) {
+                console.log(game)
+                if(game.reversible){
+                    game.reversible.shouldDeliverStatusBoard ? boardFadeIn() : boardFadeOut()
+                }
                 const ballNode = '<div class="ball"></div>';
                 const animateBallNode = '<div class="ball animate-ball"></div>'
                 $("#playerA-match").html(game.playerA.match);
@@ -85,10 +109,7 @@
                 }
 
                 $("#game-status").html(game.reversible.gameStatus);
-
-                if(game.reversible.gameStatus === "Game Over!") {
-                    boardFadeIn()
-                }
+                $("#status-info").html(game.reversible.statusInfo);
             }
         }
     </script>
@@ -98,7 +119,7 @@
         <div class="top-bar">
             <div class="stop" onclick="endGame()"><i class="fa-sharp fa-regular fa-circle-stop" style="color: #ffffff;"></i></div>
             <div class="reverse" onclick="reverse()"><i class="fa-solid fa-rotate-left" style="color: #ffffff;"></i></div>
-            <div class="board" onclick="boardFadeIn()"><i class="fa-solid fa-pause" style="color: #ffffff;"></i></div>
+            <div class="board" onclick="handlePauseClick()"><i class="fa-solid fa-pause" style="color: #ffffff;"></i></div>
         </div>
         <div class="left" onclick="handleLeftClick()">
             <div class="score">
@@ -114,8 +135,9 @@
             </div>
             <div id="playerB-match" class="prevent-select">0</div>
         </div>
-        <div class="game-record-mask" onclick="boardFadeOut()">
+        <div class="game-record-mask" onclick="hanldeStatusBoardClick()">
             <h1 id="game-status">No Game</h1>
+            <p id="status-info">0:0</p>
         </div>
     </div>
 
