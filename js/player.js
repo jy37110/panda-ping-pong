@@ -1,10 +1,10 @@
 class Player {
   constructor(option) {
-    this.score = option.score ?? 0;
-    this.match = option.match ?? 0;
-    this.service = option.service;
-    this.initalService = option.service !== 0;
-    this.serviceTimes = option.serviceTimes;
+    this.score = option?.score ?? 0;
+    this.match = option?.match ?? 0;
+    this.service = option?.service ?? 0;
+    this.initalService = option.initalService ?? option?.service !== 0;
+    this.serviceTimes = option?.serviceTimes ?? 0;
     this.shouldAnimateBall = true;
   }
 
